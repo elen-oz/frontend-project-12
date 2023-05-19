@@ -22,5 +22,6 @@
   "dependencies": {
     "@hexlet/chat-server": "^1.1.6",
     "yup": "^1.0.2"
-  }
+  },
+  "devDependencies": {}
 }
