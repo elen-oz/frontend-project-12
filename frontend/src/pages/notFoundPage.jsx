@@ -1,3 +1,4 @@
+/* eslint-disable jsx-quotes */
 /* eslint-disable import/no-extraneous-dependencies */
 import { Link } from 'react-router-dom';
 
@@ -10,8 +11,8 @@ const NotFoundPage = () => (
     />
     <h1 className='h4 text-muted'>Page not found :(</h1>
     <p className='text-muted'>
-      You can go on
-      <Link to='/'>the main page</Link>
+      Go to
+      <Link to='/'> the main page</Link>
     </p>
   </div>
 );
