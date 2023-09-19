@@ -3,22 +3,44 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { useFormik } from 'formik';
 import axios from 'axios';
 import schema from '../schemas/index.js';
+import { setChannels } from '../slices/ChannelsSlice.jsx';
+import { setMessages } from '../slices/MessagesSlice.jsx';
+
+const fetchData = async (dispatch) => {
+  try {
+    const response = await axios.get('/api/v1/data', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    // TODO: Сохранить данные в стор
+    dispatch(setChannels(response.data.channels));
+    dispatch(setMessages(response.data.messages));
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
 
 const Login = () => {
   // const history = useHistory();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (!token) {
+    if (token) {
+      fetchData(dispatch);
+    } else {
       navigate('/login');
     }
-  }, [navigate]);
+  }, [navigate, dispatch]);
 
   const formik = useFormik({
     initialValues: {
